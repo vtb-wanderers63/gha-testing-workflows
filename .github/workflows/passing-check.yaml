@@ -1,0 +1,21 @@
+name: Passing Check Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      duration:
+        description: 'Owner of the repository where the workflow is located'
+        required: false
+        default: '3'
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger workflow_dispatch
+        id: trigger
+        uses: vtb-wanderers63/gha-tamaguchi-sleep-success@main
+        with:
+          duration: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.duration }}
+

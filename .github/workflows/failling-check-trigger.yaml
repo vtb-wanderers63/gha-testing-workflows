@@ -1,0 +1,46 @@
+name: Failing Check Workflow Dispatch
+
+on:
+  workflow_dispatch:
+    inputs:
+      owner:
+        description: 'Owner of the repository where the workflow is located'
+        required: false
+        default: 'vtb-wanderers63'
+      repo:
+        description: 'Repository name where the workflow is located'
+        required: false
+        default: 'gha-testing-workflows'
+      workflow_id:
+        description: 'The ID or file name of the workflow to trigger'
+        required: true
+        default: 155378968
+      ref:
+        description: 'The git reference to run the workflow on (branch, tag, or SHA)'
+        required: false
+        default: 'main'
+      workflow_run_name:
+        description: 'Optional name to associate with the workflow run'
+        required: false
+        default: 'Failing Check Workflow Dispatched'
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger workflow_dispatch
+        id: trigger
+        uses: vtb-wanderers63/gha-workflow-dispatch@main
+        with:
+          workflow_run_name: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.workflow_run_name || 'GHA Custom Trigger' }}
+          ref: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.ref || 'master' }}
+          workflow_id: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.workflow_id || 155378968 }}
+          repo: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.repo || 'gha-testing-workflows' }}
+          owner: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.owner || 'vtb-wanderers63' }}
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
+
+      - name: Print result
+        run: |
+          echo 'workflow run id: ${{ steps.trigger.outputs.run_id }}'
