@@ -1,4 +1,5 @@
 name: Failing Check Workflow
+run-name: ${{ github.event.inputs.run_name }}
 
 on:
   workflow_dispatch:
@@ -7,6 +8,10 @@ on:
         description: 'Owner of the repository where the workflow is located'
         required: false
         default: '3'
+      run_name:
+        description: 'Name of the workflow run'
+        required: false
+        default: 'Failing Check Workflow Dispatched'
 
 jobs:
   dispatch:
