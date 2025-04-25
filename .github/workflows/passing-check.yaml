@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Trigger workflow_dispatch
+      - name: Tamaguch Nap Trigger
         id: trigger
         uses: vtb-wanderers63/gha-tamaguchi-sleep-success@main
         with:
