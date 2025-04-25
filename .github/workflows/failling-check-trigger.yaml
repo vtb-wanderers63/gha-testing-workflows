@@ -46,3 +46,19 @@ jobs:
       - name: Print result
         run: |
           echo 'workflow run id: ${{ steps.trigger.outputs.run_id }}'
+
+      - name: Workflow Run Monitoring
+        id: workflow_run_monitor
+        uses: vtb-wanderers63/gha-workflow-monitoring@main
+        with:
+          workflow_run_id: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.workflow_run_id || steps.trigger.outputs.run_id }}
+          repo: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.repo || 'gha-testing-workflows' }}
+          owner: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.owner || 'vtb-wanderers63' }}
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
+
+      - name: Print Monitoring output
+        run: |
+          echo "Workflow Run ID: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.workflow_run_id || steps.trigger.outputs.run_id }}"
+          echo "Workflow Run Status: ${{ steps.workflow_run_monitor.outputs.workflow_run_status }}"
+          echo "Workflow Run Status Message: ${{ steps.workflow_run_monitor.outputs.workflow_run_status_message }}"
