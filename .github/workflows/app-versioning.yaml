@@ -36,10 +36,10 @@ jobs:
       - uses: actions/create-github-app-token@v2
         id: app-token
         with:
-          app-id: ${{ vars.APP_ID }}
+          app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
-          owner: ${{ inputs.repository_owner }}
-          repositories: ${{ inputs.repository }}
+          owner: vtb-wanderers63
+          repositories: demo-nodejs-webpage-server
 
       - name: Version Application
         uses: vtb-wanderers63/gha-app-versioning@master
