@@ -1,0 +1,48 @@
+name: Version Application
+on:
+  workflow_dispatch:
+    inputs:
+      change_type:
+        description: 'Version change type'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      release_type:
+        description: 'Release type'
+        required: false
+        type: choice
+        options:
+          - ''
+          - alpha
+          - beta
+          - dev
+      repository_owner:
+        description: 'Release type'
+        required: true
+      repository:
+        description: 'Release type'
+        required: true
+      application_name:
+        description: 'Release type'
+        required: true
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Version Application
+        uses: your-org/app-versioning-action@v1
+        with:
+          repo: ${{ inputs.repository }}
+          repo_owner: ${{ inputs.repository_owner }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          application_name: ${{ inputs.application_name }}
+          release_type: ${{ inputs.release_type }}
+          change_type: ${{ inputs.change_type }}
