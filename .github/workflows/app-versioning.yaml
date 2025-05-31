@@ -40,7 +40,7 @@ jobs:
           private-key: ${{ secrets.PRIVATE_KEY }}
 
       - name: Version Application
-        uses: your-org/app-versioning-action@v1
+        uses: vtb-wanderers63/gha-app-versioning@master
         with:
           repo: ${{ inputs.repository }}
           repo_owner: ${{ inputs.repository_owner }}
