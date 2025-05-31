@@ -20,13 +20,13 @@ on:
           - beta
           - dev
       repository_owner:
-        description: 'Release type'
+        description: 'Repository Owner'
         required: true
       repository:
-        description: 'Release type'
+        description: 'Repository'
         required: true
       application_name:
-        description: 'Release type'
+        description: 'Application Name'
         required: true
 
 jobs:
