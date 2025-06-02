@@ -42,6 +42,7 @@ jobs:
           repositories: demo-nodejs-webpage-server
 
       - name: Version Application
+        id: app-version
         uses: vtb-wanderers63/gha-app-versioning@master
         with:
           repo: ${{ inputs.repository }}
@@ -50,3 +51,7 @@ jobs:
           application_name: ${{ inputs.application_name }}
           release_type: ${{ inputs.release_type }}
           change_type: ${{ inputs.change_type }}
+
+      - name: Print Monitoring output
+        run: |
+          echo "Release Version: ${{ steps.app-version.outputs.tag_version }}"
